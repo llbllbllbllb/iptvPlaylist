@@ -101,3 +101,5 @@ http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8?wowzasessionid=64000
 http://202.69.67.66:443/webcast/bshdlive-mobile/playlist.m3u8
 #EXTINF:-1 ,耀才财经
 http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8
+#EXTINF:-1 ,testWork
+http://107.148.254.201:13164/play.php?token=ZaksEfDL2vJWMWlNIxewGEVe&tid=gt&id=1
