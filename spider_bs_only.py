@@ -2,8 +2,7 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 import datetime
 
-from selenium import webdriver
-import os
+import time
 
 
 curTime = datetime.datetime.now()
@@ -20,37 +19,27 @@ contentDiv = soup.find(attrs={"data-role":"content"})
 
 urlList = contentDiv.find_all('a')
 
-
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-# https://github.com/mozilla/geckodriver/releases
-browser = webdriver.Chrome(
-  executable_path='/Users/ivanleung/Desktop/iptvPlaylist/chromedriver',
-  chrome_options=chrome_options
-)
-
 resultMap = {}
 for url in urlList:
   name = url.decode_contents() 
   href = url['href']
   streamUrl = 'http://m.iptv807.com/' + href
-  try: 
-    browser.get(streamUrl)
-  except:
-    print("can not parse " + name)
-  html = browser.page_source
-  soup = BeautifulSoup(html, 'html.parser')
+  # session = HTMLSession()
+  # r = session.get(streamUrl)
+  # r.html.render(timeout=20)
+  r = urlopen(req)
+  time.sleep(10)
+  soup = BeautifulSoup(r , 'html.parser')
   videoTag = soup.find('video')
   print(videoTag['src'])
   
   resultMap[name] = videoTag['src']
   
-browser.close()
 print(resultMap)
-f = open("港澳.m3u", "w")
-f.write("#EXTM3U\n")
-for key, value in resultMap.items():
-  f.write("#EXTINF:-1 ," + key + "\n")
-  f.write(value + "\n")
+# f = open("港澳.m3u", "w")
+# f.write("#EXTM3U\n")
+# for key, value in resultMap.items():
+#   f.write("#EXTINF:-1 ," + key + "\n")
+#   f.write(value + "\n")
 
-f.close()
+# f.close()
